@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+        <script>
+        $(function(){
+            $.ajax({
+                url:'http://localhost:3000/item/list',
+                type:'POST',
+                success:function(e){
+                    console.log(e)
+                    var str='';
+                    for(var i=0;i<e.length;i++){
+                        str+="<div><h3>"+e[i].name+"</h3><p>"+e[i].content+"</p></div>"
+                    }
+                    $('.box').html(str)
+                }
+            })
+        })
+        </script>
+        <style>
+            .box{
+                width: 1000px;
+                background-color: pink;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="box"></div>
+    </body>
+</html>
