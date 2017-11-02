@@ -5,23 +5,56 @@
         <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
         <script>
         $(function(){
-            $('button').click(function(){
-                $.ajax({
-                    url:'http://localhost:3000/item/add',
-                    type:'POST',
-                    data:{
-                        name:$('.ipt1').val(),
-                        con:$('.ipt2').val()
-                    },
-                    success:function(e){
-                        console.log(e)
+            $.ajax({
+                url:'http://localhost:3000/item/list',
+                type:'POST',
+                success:function(e){
+                    console.log(e)
+                    // var str='';
+                    for(var i=0;i<e.length;i++){
+                       $('.box1').append("<div><h3>"+e[i].name+"</h3><p>"+e[i].content+"</p><a data-id="+e[i].id+">删除</a></div>")
                     }
-                })
+                    // $('.box1').html(str)
+                    $('a').click(function(){
+                        var id=$(this).attr("data-id");
+                        var _this=$(this);
+                        $.ajax({
+                            url:'http://localhost:3000/item/del',
+                            type:'POST',
+                            data:{abc:id},
+                            success:function(e){
+                                _this.parent('div').remove()
+                            }
+                        })
+                    })
+                }
             })
+
+
+            $('button').click(function(){
+                var a=$('.ipt1').val();
+                var b=$('.ipt2').val();
+                if(a!=""&&b!=""){
+                    $.ajax({
+                        url:'http://localhost:3000/item/add',
+                        type:'POST',
+                        data:{
+                            name:$('.ipt1').val(),
+                            con:$('.ipt2').val()
+                        },
+                        success:function(e){
+                        }
+                    })
+                }else{
+                    alert("内容不能为空")
+                }
+             
+            })
+
         })
         </script>
         <style>
-            .box{
+            .box,.box1{
                 width: 1000px;
                 background-color: pink;
                 margin: 0 auto;
@@ -34,5 +67,6 @@
         <input type="text" placeholder="输入内容" class="ipt2"/>
         <button>添加</button>
     </div>
+    <div class="box1"></div>
     </body>
 </html>

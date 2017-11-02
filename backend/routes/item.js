@@ -29,5 +29,13 @@ router.post('/add',function(req,res,next){
 
     })
 })
+//删除
+router.post('/del', function(req, res, next) {
+    con.query('DELETE FROM addipt WHERE id='+req.body.abc+'',function(err,rows,abc){
+        if(err) throw err;
+        res.header('Access-Control-Allow-Origin','*')
+        res.send(rows);
+    });
+});
 
 module.exports = router;
